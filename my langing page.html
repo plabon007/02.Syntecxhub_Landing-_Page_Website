@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" class="transition">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowSync - Smart Workflow Tool</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234F46E5'/%3E%3Cstop offset='100%25' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='10' y='10' width='80' height='80' rx='20' fill='url(%23g)'/%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              primary: '#4F46E5',
+              secondary: '#06B6D4',
+              accent: '#8B5CF6'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    .animated-bg {
+      background: linear-gradient(-45deg, #4F46E5, #06B6D4, #8B5CF6, #3b82f6);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    .animated-bg-dark {
+      background: linear-gradient(-45deg, #0f172a, #1e293b, #020617, #1e3a8a);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: floatBlob 20s infinite alternate ease-in-out;
+    }
+
+    .blob1 { width: 300px; height: 300px; background: #4F46E5; top: 10%; left: 5%; }
+    .blob2 { width: 250px; height: 250px; background: #06B6D4; bottom: 10%; right: 10%; }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floatBlob {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-50px) translateX(30px); }
+      100% { transform: translateY(40px) translateX(-20px); }
+    }
+  </style>
+</head>
+
+<body class="font-sans text-gray-800 dark:text-gray-100 transition-colors duration-300 animated-bg dark:animated-bg-dark relative overflow-x-hidden">
+
+  <!-- Blobs -->
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+
+  <!-- Navbar -->
+  <header class="fixed w-full top-0 left-0 bg-white/30 dark:bg-gray-900/40 backdrop-blur-lg shadow z-50 border-b border-white/20">
+    <div class="flex justify-between items-center p-4 max-w-6xl mx-auto">
+      <div class="flex items-center gap-2">
+        <!-- Custom SVG Logo -->
+        <svg id="logo" width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="rounded-lg cursor-pointer">
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#4F46E5" />
+              <stop offset="100%" stop-color="#06B6D4" />
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="80" height="80" rx="20" fill="url(#grad1)">
+            <animate attributeName="rx" values="20;30;20" dur="4s" repeatCount="indefinite" />
+          </rect>
+          <path d="M30 55 C40 35, 60 35, 70 55" stroke="white" stroke-width="6" fill="none" stroke-linecap="round">
+            <animate attributeName="d" dur="4s" repeatCount="indefinite"
+              values="M30 55 C40 35, 60 35, 70 55;
+                      M30 60 C45 30, 55 30, 70 60;
+                      M30 55 C40 35, 60 35, 70 55" />
+          </path>
+        </svg>
+        <h1 class="text-xl font-bold tracking-wide">FlowSync</h1>
+      </div>
+
+      <nav class="hidden md:flex space-x-8 items-center">
+        <a href="#features" class="hover:text-brand-primary">Features</a>
+        <a href="#pricing" class="hover:text-brand-primary">Pricing</a>
+        <a href="#contact" class="hover:text-brand-primary">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <button id="themeToggle" class="px-3 py-2 rounded-lg bg-white/50 dark:bg-gray-700">🌙</button>
+        <button id="menuBtn" class="md:hidden text-2xl">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="text-center pt-32 pb-24 px-6 text-white flex flex-col items-center">
+    <div class="bg-white/10 dark:bg-gray-800/40 backdrop-blur-xl p-10 rounded-3xl shadow-xl max-w-2xl">
+      <h2 class="text-5xl font-bold mb-6">Simplify Your Workflow</h2>
+      <p class="mb-8 text-lg">FlowSync helps teams collaborate, automate tasks, and boost productivity effortlessly.</p>
+      <div class="flex gap-4 flex-wrap justify-center">
+        <button class="bg-white text-brand-primary px-6 py-3 rounded-xl font-semibold hover:scale-105 transition">Get Started</button>
+        <button class="border border-white px-6 py-3 rounded-xl hover:bg-white hover:text-brand-primary transition">Live Demo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-20 px-6 max-w-6xl mx-auto">
+    <h3 class="text-4xl font-bold text-center mb-12">Features</h3>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-white/40 backdrop-blur-lg p-8 rounded-2xl shadow-lg">
+        <h4 class="text-xl font-semibold mb-3">Automation</h4>
+        <p>Automate repetitive tasks easily.</p>
+      </div>
+      <div class="bg-white/40 backdrop-blur-lg p-8 rounded-2xl shadow-lg">
+        <h4 class="text-xl font-semibold mb-3">Collaboration</h4>
+        <p>Work together with your team in real-time.</p>
+      </div>
+      <div class="bg-white/40 backdrop-blur-lg p-8 rounded-2xl shadow-lg">
+        <h4 class="text-xl font-semibold mb-3">Analytics</h4>
+        <p>Track performance and insights.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="py-20 px-6 max-w-6xl mx-auto">
+    <h3 class="text-4xl font-bold text-center mb-12">Pricing</h3>
+    <div class="grid md:grid-cols-3 gap-8">
+      
+      <!-- Basic -->
+      <div class="bg-white/40 dark:bg-gray-800/40 backdrop-blur-lg p-8 rounded-2xl shadow-lg text-center border border-white/30 hover:scale-105 transition">
+        <h4 class="text-xl font-semibold mb-4">Basic</h4>
+        <p class="text-3xl font-bold mb-4">$9/mo</p>
+        <p class="mb-6">Perfect for individuals</p>
+        <button class="bg-brand-primary text-white px-6 py-3 rounded-xl hover:scale-105 transition">Choose Plan</button>
+      </div>
+
+      <!-- Pro -->
+      <div class="bg-white/60 dark:bg-gray-800/50 backdrop-blur-lg p-8 rounded-2xl shadow-xl text-center border-2 border-brand-primary scale-105">
+        <h4 class="text-xl font-semibold mb-4">Pro</h4>
+        <p class="text-3xl font-bold mb-4">$19/mo</p>
+        <p class="mb-6">Best for teams</p>
+        <button class="bg-brand-primary text-white px-6 py-3 rounded-xl hover:scale-105 transition">Get Started</button>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="bg-white/40 dark:bg-gray-800/40 backdrop-blur-lg p-8 rounded-2xl shadow-lg text-center border border-white/30 hover:scale-105 transition">
+        <h4 class="text-xl font-semibold mb-4">Enterprise</h4>
+        <p class="text-3xl font-bold mb-4">Custom</p>
+        <p class="mb-6">For large organizations</p>
+        <button class="bg-brand-primary text-white px-6 py-3 rounded-xl hover:scale-105 transition">Contact Us</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 px-6 max-w-4xl mx-auto">
+    <h3 class="text-4xl font-bold text-center mb-12">Contact Us</h3>
+    <form class="bg-white/40 dark:bg-gray-800/40 backdrop-blur-lg p-8 rounded-2xl shadow-lg border border-white/30 grid gap-4">
+      <input type="text" placeholder="Your Name" class="p-3 rounded-xl border focus:ring-2 focus:ring-brand-primary outline-none" />
+      <input type="email" placeholder="Your Email" class="p-3 rounded-xl border focus:ring-2 focus:ring-brand-primary outline-none" />
+      <textarea placeholder="Your Message" rows="4" class="p-3 rounded-xl border focus:ring-2 focus:ring-brand-primary outline-none"></textarea>
+      <button class="bg-brand-primary text-white py-3 rounded-xl hover:scale-105 transition">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center p-6 bg-white/30 backdrop-blur-lg">
+    <p>© 2026 FlowSync. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+    toggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      toggleBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    });
+  </script>
+
+</body>
+</html>
